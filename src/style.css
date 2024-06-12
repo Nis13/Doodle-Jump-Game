@@ -1,0 +1,17 @@
+*{
+  margin: 0;
+  box-sizing: border-box;
+}
+.game-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background-color: antiquewhite;
+}
+#gameCanvas{
+  width: 50%;
+  height: 100vh;
+  margin: auto;
+  background-color: white;
+}
