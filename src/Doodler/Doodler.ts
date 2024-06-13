@@ -25,7 +25,7 @@ export class Doodler {
         this.velocityY = 0;
         this.velocityX = 0;
         this.gravity = 0.2;
-        this.jumpForce = 9;
+        this.jumpForce = 10;
         this.goingLeft = true;
         this.keysDown = {};
 
@@ -48,24 +48,28 @@ export class Doodler {
     update(platforms: Platform[]) {
         if (this.x + this.width < 0) this.x = CANVAS_DIMENSIONS.CANVAS_WIDTH;  
         if (this.x > CANVAS_DIMENSIONS.CANVAS_WIDTH) this.x = -this.width;
-        if (this.velocityY < -9) this.velocityY = -9;
+        if (this.velocityY < -8) this.velocityY = -8;
 
         this.velocityY += this.gravity;
         this.y += this.velocityY;
-
+        
+        // if (this.y < CANVAS_DIMENSIONS.CANVAS_HEIGHT/2 ){
+        //     this.y =CANVAS_DIMENSIONS.CANVAS_HEIGHT/2
+        // }
          
         this.x += this.velocityX;
-
-        for (let platform of platforms) {
-            if (this.y + this.height >= platform.y && this.y + this.height <= platform.y + platform.height) {
-                let minX = platform.x - this.width;
+            for (let platform of platforms) {
+                
+                if (this.y + this.height >= platform.y && this.y + this.height <= platform.y + platform.height) {
+                    let minX = platform.x - this.width;
                 let maxX = platform.x + platform.width;
-
-                if (this.x >= minX && this.x <= maxX) {
-                    this.jump();
-                }
+            
+            if (this.x >= minX && this.x <= maxX && this.velocityY>0) {
+                this.jump();
             }
         }
+    }
+        
     }
 
     jump() {

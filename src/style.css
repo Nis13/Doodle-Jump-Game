@@ -2,16 +2,53 @@
   margin: 0;
   box-sizing: border-box;
 }
-.game-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+body{
   width: 100%;
+}
+.game-container {
+  /* display: flex;
+  align-items: center;
+  justify-content: center; */
+  min-width: 400;
+  margin: 0 auto;
+  width: 25%;
   background-color: antiquewhite;
 }
 #gameCanvas{
-  width: 50%;
-  height: 100vh;
+  width: 100%;
+  height: 98vh;
   margin: auto;
   background-color: white;
+}
+.startpage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  min-width: 400px;
+  margin: auto;
+  width: 25%;
+  height: 98vh;
+  background: url(./startpagebg.png) no-repeat center center;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#startButton {
+  font-size: 2rem;
+  background-color: rgba(208, 203, 200, 0.358);
+  border: none;
+  cursor: pointer;
+  border: 5px solid rgb(38, 2, 2);
+  border-radius: 10px;
+  padding: 10px 20px;
+  text-align: center;
+}
+
+#startButton:hover{
+  background-color: rgb(92, 92, 48);
+  color:antiquewhite ;
 }

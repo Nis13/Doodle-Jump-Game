@@ -1,5 +1,5 @@
 import './style.css';
-import { CANVAS_DIMENSIONS, PLATFORM_COUNT, PLATFORM_WIDTH } from './Constants/Constants';
+import { CANVAS_DIMENSIONS, PLATFORM_COUNT, PLATFORM_HEIGHT, PLATFORM_WIDTH } from './Constants/Constants';
 import { Doodler } from './Doodler/Doodler';
 import { Platform } from './platform';
 
@@ -48,6 +48,8 @@ class Game {
         this.platforms = [];
         this.gap = CANVAS_DIMENSIONS.CANVAS_HEIGHT / PLATFORM_COUNT;
 
+        this.platforms.push(new Platform(this.ctx, CANVAS_DIMENSIONS.CANVAS_WIDTH/2, CANVAS_DIMENSIONS.CANVAS_HEIGHT-PLATFORM_HEIGHT, './platform.png'))
+
         for (let i = 1; i <= PLATFORM_COUNT; i++) {
             this.platforms.push(new Platform(this.ctx, getRandomInt(0, CANVAS_DIMENSIONS.CANVAS_WIDTH-PLATFORM_WIDTH), CANVAS_DIMENSIONS.CANVAS_HEIGHT - i * this.gap, './platform.png'));
         }
@@ -56,42 +58,71 @@ class Game {
     }
 
     draw = () => {
+      
         if (this.isGameOver) return;
 
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.drawImage(this.backgroundImage, 0, 0, this.canvas.width, this.canvas.height);
         this.ctx.save();
-        this.ctx.translate(0, CANVAS_DIMENSIONS.CANVAS_HEIGHT / 2 - this.doodler.y);
+        // if (this.doodler.y > CANVAS_DIMENSIONS.CANVAS_HEIGHT / 2){
 
+        // }
+        
+        // this.ctx.translate(0, CANVAS_DIMENSIONS.CANVAS_HEIGHT / 2 - this.doodler.y);
         this.ctx.fillStyle = "black";
         this.ctx.font = "30px Arial";
         this.ctx.textAlign = "center";
-        this.ctx.fillText(this.score.toString(), this.canvas.width / 2, this.doodler.y - 300);
+        this.ctx.fillText(this.score.toString(), this.canvas.width / 2,  50);
 
 
         this.doodler.update(this.platforms);
         this.doodler.draw();
-        for (let platform of this.platforms) {
-            platform.draw();
+
+
+        if (this.doodler.velocityY < 0 && this.doodler.y < 300) { 
+            for (let platform of this.platforms) {
+                platform.y -= this.doodler.velocityY; 
+                // platform.y += this.doodler.y;
+            }
         }
+         // Update platform positions
+    // if (this.doodler.velocityY < 0 && this.doodler.y < this.canvas.height * 3 / 4) {
+    //     for (let platform of this.platforms) {
+    //         platform.y -= this.doodler.velocityY; 
+    //     }
+    // }
+
+    // Draw platforms
+    for (let platform of this.platforms) {
+        platform.draw();
+    }
 
         if (this.doodler.y < this.platforms[this.platforms.length - 1].y + 200) {
             this.platforms.push(new Platform(this.ctx, getRandomInt(0, CANVAS_DIMENSIONS.CANVAS_WIDTH-PLATFORM_WIDTH), this.platforms[this.platforms.length - 1].y - this.gap, './platform.png'));
         }
-        if (this.platforms[0].y > this.doodler.y + 400) {
+        // if (this.platforms[0].y > this.doodler.y + 400) {
+        //     this.platforms.shift();
+        //     this.score++;
+        // }
+        if (this.platforms[0].y > CANVAS_DIMENSIONS.CANVAS_HEIGHT) {
             this.platforms.shift();
             this.score++;
         }
 
+
         if (this.doodler.y > CANVAS_DIMENSIONS.CANVAS_HEIGHT) {
             this.gameOver();
         }
+      //   if (this.doodler.y > this.platforms[this.platforms.length - 1].y + PLATFORM_WIDTH) {
+      //     this.gameOver();
+      // }
 
         this.ctx.restore();
         requestAnimationFrame(this.draw);
     }
 
     gameOver() {
+
         this.isGameOver = true;
 
         
@@ -100,9 +131,9 @@ class Game {
         this.ctx.fillStyle = "black";
         this.ctx.font = "30px Arial";
         this.ctx.textAlign = "center";
-        this.ctx.fillText(`Game Over!`, this.canvas.width / 2, this.canvas.height / 2 +500);
-        this.ctx.fillText(`You scored ${this.score}`, this.canvas.width / 2, this.canvas.height / 2+450);
-        this.ctx.fillText(`Press Space to Restart`, this.canvas.width / 2, this.canvas.height/ 2 + 550);
+        this.ctx.fillText(`Game Over!`, this.canvas.width / 2, 500);
+        this.ctx.fillText(`You scored ${this.score}`, this.canvas.width / 2, 450);
+        this.ctx.fillText(`Press Space to Restart`, this.canvas.width / 2,  550);
     }
 
     restartGame(event: KeyboardEvent) {
@@ -124,6 +155,17 @@ class Game {
     }
 }
 
+// document.addEventListener('DOMContentLoaded', () => {
+//     new Game();
+// });
 document.addEventListener('DOMContentLoaded', () => {
-    new Game();
+  const startButton = document.getElementById('startButton') as HTMLButtonElement;
+  const startPage = document.querySelector<HTMLElement>('.startpage')!;
+
+
+  startButton.addEventListener('click', () => {
+      startPage.style.display ='none';
+      startButton.style.display = 'none'; 
+       new Game();
+  });
 });
