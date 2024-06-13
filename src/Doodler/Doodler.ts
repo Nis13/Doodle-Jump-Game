@@ -53,10 +53,6 @@ export class Doodler {
         this.velocityY += this.gravity;
         this.y += this.velocityY;
         
-        // if (this.y < CANVAS_DIMENSIONS.CANVAS_HEIGHT/2 ){
-        //     this.y =CANVAS_DIMENSIONS.CANVAS_HEIGHT/2
-        // }
-         
         this.x += this.velocityX;
             for (let platform of platforms) {
                 
@@ -73,7 +69,6 @@ export class Doodler {
     }
 
     jump() {
-        // this.velocityY -= this.jumpForce;
         this.velocityY = -this.jumpForce; 
     }
 

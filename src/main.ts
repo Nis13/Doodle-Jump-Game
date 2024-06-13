@@ -64,11 +64,7 @@ class Game {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.drawImage(this.backgroundImage, 0, 0, this.canvas.width, this.canvas.height);
         this.ctx.save();
-        // if (this.doodler.y > CANVAS_DIMENSIONS.CANVAS_HEIGHT / 2){
-
-        // }
         
-        // this.ctx.translate(0, CANVAS_DIMENSIONS.CANVAS_HEIGHT / 2 - this.doodler.y);
         this.ctx.fillStyle = "black";
         this.ctx.font = "30px Arial";
         this.ctx.textAlign = "center";
@@ -82,15 +78,8 @@ class Game {
         if (this.doodler.velocityY < 0 && this.doodler.y < 300) { 
             for (let platform of this.platforms) {
                 platform.y -= this.doodler.velocityY; 
-                // platform.y += this.doodler.y;
             }
         }
-         // Update platform positions
-    // if (this.doodler.velocityY < 0 && this.doodler.y < this.canvas.height * 3 / 4) {
-    //     for (let platform of this.platforms) {
-    //         platform.y -= this.doodler.velocityY; 
-    //     }
-    // }
 
     // Draw platforms
     for (let platform of this.platforms) {
@@ -100,10 +89,6 @@ class Game {
         if (this.doodler.y < this.platforms[this.platforms.length - 1].y + 200) {
             this.platforms.push(new Platform(this.ctx, getRandomInt(0, CANVAS_DIMENSIONS.CANVAS_WIDTH-PLATFORM_WIDTH), this.platforms[this.platforms.length - 1].y - this.gap, './platform.png'));
         }
-        // if (this.platforms[0].y > this.doodler.y + 400) {
-        //     this.platforms.shift();
-        //     this.score++;
-        // }
         if (this.platforms[0].y > CANVAS_DIMENSIONS.CANVAS_HEIGHT) {
             this.platforms.shift();
             this.score++;
@@ -113,9 +98,6 @@ class Game {
         if (this.doodler.y > CANVAS_DIMENSIONS.CANVAS_HEIGHT) {
             this.gameOver();
         }
-      //   if (this.doodler.y > this.platforms[this.platforms.length - 1].y + PLATFORM_WIDTH) {
-      //     this.gameOver();
-      // }
 
         this.ctx.restore();
         requestAnimationFrame(this.draw);
@@ -155,9 +137,6 @@ class Game {
     }
 }
 
-// document.addEventListener('DOMContentLoaded', () => {
-//     new Game();
-// });
 document.addEventListener('DOMContentLoaded', () => {
   const startButton = document.getElementById('startButton') as HTMLButtonElement;
   const startPage = document.querySelector<HTMLElement>('.startpage')!;
